@@ -81,8 +81,11 @@ def get_pokemon_info(intent, session):
         payload = ""
         response = requests.request("GET", url, data=payload)
 
-        speech_output = response.json()
-        reprompt_text = "You can ask me for type information by saying, Alexa, what type is Pikachu?"
+        speech_output = response.json()['types'][0]['type']['name']
+    else: 
+       speech_output = "I didn't quite get that"
+
+    reprompt_text = "You can ask me for type information by saying, Alexa, what type is Pikachu?"
 
     return build_response({}, build_speechlet_response(
         card_title, speech_output, reprompt_text, should_end_session))
