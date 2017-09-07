@@ -81,7 +81,15 @@ def get_pokemon_info(intent, session):
         payload = ""
         response = requests.request("GET", url, data=payload)
 
-        speech_output = response.json()['types'][0]['type']['name']
+        types = response.json()['types']
+
+        speech_output = types[0]['type']['name']
+
+        for i in range(1, len(types)):
+            speech_output += " and " + types[i]['type']['name']
+            i += 1
+
+        #speech_output = response.json()['types'][0]['type']['name']
     else: 
        speech_output = "I didn't quite get that"
 
